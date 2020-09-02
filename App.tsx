@@ -1,13 +1,18 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
-import Login from './src/screens/login';
-
+import {NavigationContainer} from '@react-navigation/native';
+import {ScheduleContextProvider} from './utils/contextprovider';
+import Route from './src/route';
 const App = () => {
   return (
     <>
       <StatusBar translucent backgroundColor="transparent" />
       <SafeAreaView style={styles.SafeArea}>
-        <Login/>
+        <NavigationContainer>
+          <ScheduleContextProvider>
+            <Route />
+          </ScheduleContextProvider>
+        </NavigationContainer>
       </SafeAreaView>
     </>
   );
