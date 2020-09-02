@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useNavigation} from '@react-navigation/native';
+import ScheduleContext from '../../utils/contextprovider';
 
 const Body = () => {
+  const [user, setUser] = useState('');
+  const [pass, setPass] = useState('');
+  const context = useContext(ScheduleContext);
   return (
     <View style={styles.container}>
       <Text style={styles.textLogin}>Đăng nhập</Text>
@@ -20,6 +25,9 @@ const Body = () => {
           autoCapitalize={'none'}
           autoCompleteType={'off'}
           autoCorrect={false}
+          onChangeText={(text) => {
+            setUser(text);
+          }}
         />
       </View>
       <View style={styles.inputPass}>
@@ -31,11 +39,18 @@ const Body = () => {
           autoCompleteType={'off'}
           autoCorrect={false}
           secureTextEntry
+          onChangeText={(text) => {
+            setPass(text);
+          }}
         />
       </View>
       <TouchableOpacity
         style={[shadow, styles.button]}
-        onPress={() => {
+        onPress={async () => {
+          if (user !== '' && pass !== '')
+            if (!(await context.login(user, pass))) console.log('error');
+            else console.log('xong');
+          else console.log('Nhập');
         }}>
         <Text style={styles.textButton}>Đăng nhập</Text>
       </TouchableOpacity>
@@ -79,7 +94,7 @@ const styles = StyleSheet.create({
   textButton: {
     color: 'white',
     fontSize: 16,
-    fontWeight:'900'
+    fontWeight: '900',
   },
   button: {
     width: 150,
