@@ -8,11 +8,11 @@ const App = () => {
     <>
       <StatusBar translucent backgroundColor="transparent" />
       <SafeAreaView style={styles.SafeArea}>
-        <NavigationContainer>
-          <ScheduleContextProvider>
+        <ScheduleContextProvider>
+          <NavigationContainer>
             <Route />
-          </ScheduleContextProvider>
-        </NavigationContainer>
+          </NavigationContainer>
+        </ScheduleContextProvider>
       </SafeAreaView>
     </>
   );

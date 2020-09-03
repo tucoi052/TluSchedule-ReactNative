@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
@@ -14,6 +15,7 @@ const Body = () => {
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
   const context = useContext(ScheduleContext);
+
   return (
     <View style={styles.container}>
       <Text style={styles.textLogin}>Đăng nhập</Text>
@@ -48,7 +50,16 @@ const Body = () => {
         style={[shadow, styles.button]}
         onPress={async () => {
           if (user !== '' && pass !== '')
-            if (!(await context.login(user, pass))) console.log('error');
+
+            if (!(await context.login(user, pass)))
+              Alert.alert('Lỗi', 'Kiểm tra lại tài khoản mật khẩu', [
+                {
+                  text: 'Cancel',
+                  onPress: () => {},
+                  style: 'cancel',
+                },
+                {text: 'OK', onPress: () => {}},
+              ]);
             else console.log('xong');
           else console.log('Nhập');
         }}>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {getSchedule, getAllSchedule, getInDay, getLogin} from './api';
+import {getSchedule, getLogin, getUpdate} from './api';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const ScheduleContext = React.createContext({
@@ -7,20 +7,17 @@ const ScheduleContext = React.createContext({
   info: null,
   signed: false,
   loading: true,
-  all: [[], []],
-  inDay: [],
   login: async (user: string, pass: string): Promise<boolean> => {
-    return false;
+    return true;
   },
   logout: () => {},
+  update: async () => {},
 });
 
 const ScheduleContextProvider = ({children}: any) => {
   const [schedules, setSchedules] = useState(null);
   const [info, setInfo] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [all, setAll] = useState<any[]>([[], []]);
-  const [inDay, setInDay] = useState<any[]>([]);
 
   useEffect(() => {
     const loadStorageData = async () => {
@@ -42,25 +39,21 @@ const ScheduleContextProvider = ({children}: any) => {
   }, []);
 
   const login = async (user: string, pass: string) => {
-    // const info = await getLogin(user, pass);
-    // if (info.length) {
+    const info = await getLogin(user, pass);
+    if (!!info) {
       const schedules = await getSchedule();
-      // console.log(schedules)
-      // console.log(getAllSchedule(schedules))
-      // console.log(getInDay(new Date(), schedules))
       setSchedules(JSON.parse(JSON.stringify(schedules)));
-      setAll(getAllSchedule(JSON.parse(JSON.stringify(schedules))));
-      setInDay(getInDay(new Date(), JSON.parse(JSON.stringify(schedules))));
-      // setInfo(JSON.parse(JSON.stringify(info)));
+      setInfo(JSON.parse(JSON.stringify(info)));
       try {
         await AsyncStorage.setItem('schedules', JSON.stringify(schedules));
         await AsyncStorage.setItem('info', JSON.stringify(info));
       } catch (error) {
         console.log(error);
+        return false;
       }
       return true;
-    // }
-    // return false;
+    }
+    else return false
   };
 
   const logout = () => {
@@ -70,6 +63,16 @@ const ScheduleContextProvider = ({children}: any) => {
     });
   };
 
+  const update = async () => {
+    const schedules = await getSchedule();
+    setSchedules(JSON.parse(JSON.stringify(schedules)));
+    try {
+      await AsyncStorage.setItem('schedules', JSON.stringify(schedules));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ScheduleContext.Provider
       value={{
@@ -77,10 +80,9 @@ const ScheduleContextProvider = ({children}: any) => {
         info,
         signed: !!info,
         loading,
-        all: [[], []],
-        inDay: [],
         login,
         logout,
+        update,
       }}>
       {children}
     </ScheduleContext.Provider>

@@ -11,11 +11,11 @@ const Header = ({navigation, title}:any) => {
           style={{height: '100%'}}
         />
         <TouchableOpacity
-          style={{position: 'absolute', bottom:5, left:10}}
+          style={{position: 'absolute', bottom:5, width:'20%'}}
           onPress={() => {
             navigation.openDrawer();
           }}>
-          <Icon name="align-justify" size={25} style={{color:'white'}} />
+          <Icon name="align-justify" size={25} style={{marginLeft:15, color:'white'}} />
         </TouchableOpacity>
         <View style={{width:'100%', flexDirection:'row',justifyContent:'center',alignContent:'center'}}>
           <Text

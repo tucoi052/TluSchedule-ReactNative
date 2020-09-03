@@ -13,7 +13,7 @@ const ToDaySchedule = ({navigation}: any) => {
   return (
     <>
       <Header navigation={navigation} title={'Lịch học hôm nay'} />
-      {data.length ? (
+      {!!data ? (
         <ScrollView style={{flex: 1, height: '100%'}}>
           <View style={{marginTop: 15}}>
             {data.map((item, key) => (

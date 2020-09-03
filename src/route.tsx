@@ -20,7 +20,7 @@ const Route = () => {
 
   return (
     <Stack.Navigator>
-      {context.schedules ? (
+      {context.signed ? (
         <Stack.Screen
           name="Home"
           component={Draw}

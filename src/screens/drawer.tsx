@@ -1,99 +1,85 @@
 import {
   DrawerContentScrollView,
   createDrawerNavigator,
+  DrawerItem,
 } from '@react-navigation/drawer';
 import {View, StyleSheet, Text} from 'react-native';
-import {
-  Avatar,
-  Title,
-  Caption,
-  Paragraph,
-  Provider as PaperProvider,
-  DarkTheme as PaperDarkTheme,
-} from 'react-native-paper';
-import React, {useState, useEffect} from 'react';
+import {Title, Caption, Drawer, Avatar} from 'react-native-paper';
+import React, {useState, useEffect, useContext} from 'react';
 import Home from './home';
+import ScheduleContext from '../../utils/contextprovider';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { getUpdate } from '../../utils/api';
 
 const DrawerContent = (props: any) => {
+  const context: any = useContext(ScheduleContext);
+  const info = context.info;
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.drawerContent}>
         <View style={styles.userInfoSection}>
-          {/* <Avatar.Image
+          <Avatar.Image
+            style={{
+              backgroundColor: 'transparent',
+            }}
             source={{
               uri:
-                'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',
+                'https://icon-library.com/images/avatar-icon-png/avatar-icon-png-15.jpg',
             }}
             size={50}
-          /> */}
-          <Title style={styles.title}>Dawid Urbaniak</Title>
-          <Caption style={styles.caption}>@trensik</Caption>
-          <View style={styles.row}>
-            <View style={styles.section}>
-              <Paragraph style={[styles.paragraph, styles.caption]}>
-                202
-              </Paragraph>
-              <Caption style={styles.caption}>Following</Caption>
-            </View>
-            <View style={styles.section}>
-              <Paragraph style={[styles.paragraph, styles.caption]}>
-                159
-              </Paragraph>
-              <Caption style={styles.caption}>Followers</Caption>
-            </View>
-          </View>
+          />
+          <Title style={styles.title}>{info?.name}</Title>
+          <Caption style={styles.caption}>{info?.idCode}</Caption>
+          <Caption style={styles.caption}>{info?.class}</Caption>
         </View>
-        {/* <Drawer.Section style={styles.drawerSection}>
+        <Drawer.Section style={styles.drawerSection}>
           <DrawerItem
             icon={({color, size}) => (
-              <Icon name="account-outline" color={color} size={size} />
+              <Icon name="user" color={color} size={size} />
             )}
-            label="Profile"
+            label="Thông tin cá nhân"
             onPress={() => {}}
           />
           <DrawerItem
             icon={({color, size}) => (
-              <Icon name="tune" color={color} size={size} />
+              <Icon name="phone" color={color} size={size} />
             )}
-            label="Preferences"
-            onPress={() => {}}
-          />
-          <DrawerItem
-            icon={({color, size}) => (
-              <Icon name="bookmark-outline" color={color} size={size} />
-            )}
-            label="Bookmarks"
+            label="Liên hệ giảng viên"
             onPress={() => {}}
           />
         </Drawer.Section>
-        <Drawer.Section title="Preferences">
-          <TouchableRipple onPress={() => {}}>
-            <View style={styles.preference}>
-              <Text>Dark Theme</Text>
-              <View pointerEvents="none">
-                <Switch value={false} />
-              </View>
-            </View>
-          </TouchableRipple>
-          <TouchableRipple onPress={() => {}}>
-            <View style={styles.preference}>
-              <Text>RTL</Text>
-              <View pointerEvents="none">
-                <Switch value={false} />
-              </View>
-            </View>
-          </TouchableRipple>
-        </Drawer.Section> */}
+        <Drawer.Section>
+          <DrawerItem
+            icon={({color, size}) => (
+              <Icon name="cog" color={color} size={size} />
+            )}
+            label="Cài đặt"
+            onPress={() => {}}
+          />
+          <DrawerItem
+            icon={({color, size}) => (
+              <Icon name="check" color={color} size={size} />
+            )}
+            label="Cập nhật thông tin"
+            onPress={async () => {
+              // if ((await getUpdate()) == '1') {
+                // await context.update();
+                // console.log('update');
+              // }
+            }}
+          />
+          <DrawerItem
+            icon={({color, size}) => (
+              <Icon name="sign-out" color={color} size={size} />
+            )}
+            label="Đăng xuất"
+            onPress={() => {
+              context.logout();
+            }}
+          />
+        </Drawer.Section>
       </View>
     </DrawerContentScrollView>
-  );
-};
-
-const hh = () => {
-  return (
-    <View>
-      <Text>aaa</Text>
-    </View>
   );
 };
 
@@ -106,15 +92,15 @@ const Draw = () => {
   }, [initRender]);
 
   return (
-      <Drawerr.Navigator
-        drawerStyle={{width: initRender ? 0 : '70%'}}
-        minSwipeDistance={20}
-        initialRouteName={'Home'}
-        drawerPosition={'left'}
-        drawerType={'front'}
-        drawerContent={() => <DrawerContent />}>
-        <Drawerr.Screen name="Home" component={Home} />
-      </Drawerr.Navigator>
+    <Drawerr.Navigator
+      drawerStyle={{width: initRender ? 0 : '70%'}}
+      minSwipeDistance={20}
+      initialRouteName={'Home'}
+      drawerPosition={'left'}
+      drawerType={'front'}
+      drawerContent={() => <DrawerContent />}>
+      <Drawerr.Screen name="Home" component={Home} />
+    </Drawerr.Navigator>
   );
 };
 const styles = StyleSheet.create({

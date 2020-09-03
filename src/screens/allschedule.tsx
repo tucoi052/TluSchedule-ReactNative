@@ -10,7 +10,7 @@ const AllSchedule = ({navigation}: any) => {
   return (
     <>
       <Header navigation={navigation} title={'Lịch học theo tuần'} />
-      {data ? (
+      {data.length ? (
         <ScrollView style={{flex: 1}}>
           {data[0].map((day: string, indexDay: number) => (
             <View style={{width: '100%'}} key={indexDay}>

@@ -19,7 +19,7 @@ const Home = () => {
         borderTopLeftRadius: 17,
         borderTopRightRadius: 17,
         backgroundColor: 'transparent',
-        elevation: 0.7,
+        elevation: 1,
       }}>
       <Tab.Screen
         name="Hôm nay"

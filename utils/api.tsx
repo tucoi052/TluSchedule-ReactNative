@@ -1,25 +1,24 @@
 import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
+
 const api = axios.create({
   baseURL: `http://tluplus.duongphung.com/`,
 });
 
-let info: {idCode: any; pass: any; name: any; class: any; progress: any}[] = [];
+let info: any = {};
 
 const getLogin = async (user: string, pass: string) => {
   await api
     .get(`dang-nhap.php?msv=${user}&pass=${pass}`)
     .then((res) => {
       const data = res.data[0];
-      info = [
-        {
-          name: data['Ho_ten'],
-          idCode: data['Msv'],
-          pass: data['Pass'],
-          class: data['Lop'],
-          progress: data['Tien_do'],
-        },
-      ];
+      info = {
+        ...info,
+        name: data['Ho_ten'],
+        idCode: data['Msv'],
+        pass: data['Pass'],
+        class: data['Lop'],
+        progress: data['Tien_do'],
+      };
     })
     .catch((res) => {
       console.log(res);
@@ -29,11 +28,8 @@ const getLogin = async (user: string, pass: string) => {
 
 const getSchedule = async () => {
   let schedules: {[x: string]: string}[] = [];
-  // lich-hoc.php?msv=${info[0]}&pass=${info[1]}
-  await axios
-    .get(
-      `http://89115d0317a3.ngrok.io/`,
-    )
+  await api
+    .get(`lich-hoc.php?msv=${info.idCode}&pass=${info.pass}`)
     .then((res) => {
       res.data.forEach((element: {[x: string]: string}) => {
         //////////////////////////////////nhớ sửa dấu
@@ -52,7 +48,7 @@ const getSchedule = async () => {
 
 const getInDay = (date: Date, schedules: any) => {
   let scheduleInDay: {[x: string]: string}[] = [];
-  schedules.forEach((element: {[x: string]: string}) => {
+  schedules?.forEach((element: {[x: string]: string}) => {
     if (new Date(element['Ngay_bat_dau'].split('/').reverse().join('-')) > date)
       return;
     for (
@@ -63,7 +59,7 @@ const getInDay = (date: Date, schedules: any) => {
       if (i.toString() === date.toString())
         if (element['Thu_hoc'] === (i.getDay() + 1).toString()) {
           scheduleInDay.push(element);
-          // return;
+          return;
         }
     }
   });
@@ -93,7 +89,7 @@ const getAllSchedule = (temp: any) => {
     i.setDate(i.getDate() + 1)
   ) {
     const scheduletemp = getInDay(new Date(i), temp);
-    if (scheduletemp.length>0) {
+    if (scheduletemp.length > 0) {
       const date = `Thứ ${i.getDay() + 1}, Ngày ${i.getDate()}/${
         i.getMonth() + 1
       }/${i.getFullYear()}`;
@@ -105,15 +101,13 @@ const getAllSchedule = (temp: any) => {
   return [day, schedules];
 };
 
-const serviceGetSchedule = async () => {
-  await getSchedule();
-
-  try {
-    // await AsyncStorage.setItem('schedules', JSON.stringify(schedules));
-    await AsyncStorage.setItem('info', JSON.stringify(info));
-  } catch (error) {
-    console.log(error);
-  }
+const getUpdate = async () => {
+  let update = '';
+  await api.get(`update.php?msv=${info.idCode}`).then((res) => {
+    update = res.data;
+  });
+  console.log(update)
+  return update;
 };
 
-export {getLogin, getSchedule, getInDay, getAllSchedule, serviceGetSchedule};
+export {getLogin, getSchedule, getInDay, getAllSchedule, getUpdate};
