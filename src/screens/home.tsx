@@ -1,15 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import Login from './login';
 import AllSchedule from './allschedule';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {View, Text} from 'react-native';
+import ToDaySchedule from './todayschedule';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Tab = createMaterialBottomTabNavigator();
 const Home = () => {
   return (
     <Tab.Navigator
-      sceneAnimationEnabled={true}
+      sceneAnimationEnabled={false}
       shifting={true}
       backBehavior={'none'}
       initialRouteName="Home"
@@ -20,20 +19,21 @@ const Home = () => {
         borderTopLeftRadius: 17,
         borderTopRightRadius: 17,
         backgroundColor: 'transparent',
-        elevation: 1,
+        elevation: 0.7,
       }}>
       <Tab.Screen
-        name="All"
-        component={AllSchedule}
+        name="Hôm nay"
+        component={ToDaySchedule}
         options={{
           tabBarIcon: 'home',
         }}
       />
       <Tab.Screen
-        name="a"
-        component={Login}
+        name="Tất cả"
+        component={AllSchedule}
         options={{
-          tabBarIcon: 'bell-outline',
+
+          tabBarIcon: 'book',
         }}
       />
     </Tab.Navigator>

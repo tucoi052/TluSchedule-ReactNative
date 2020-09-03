@@ -112,7 +112,6 @@ const Draw = () => {
         initialRouteName={'Home'}
         drawerPosition={'left'}
         drawerType={'front'}
-        // drawerStyle={{backgroundColor:'transparent'}}
         drawerContent={() => <DrawerContent />}>
         <Drawerr.Screen name="Home" component={Home} />
       </Drawerr.Navigator>

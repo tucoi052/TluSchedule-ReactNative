@@ -32,7 +32,7 @@ const getSchedule = async () => {
   // lich-hoc.php?msv=${info[0]}&pass=${info[1]}
   await axios
     .get(
-      `https://c1bc73958804.ngrok.io/`,
+      `http://89115d0317a3.ngrok.io/`,
     )
     .then((res) => {
       res.data.forEach((element: {[x: string]: string}) => {

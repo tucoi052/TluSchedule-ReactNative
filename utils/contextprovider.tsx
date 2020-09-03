@@ -29,8 +29,8 @@ const ScheduleContextProvider = ({children}: any) => {
         const storageInfo = await AsyncStorage.getItem('info');
 
         if (storageSchedules && storageInfo) {
-          // setSchedules(JSON.parse(storageSchedules));
-          // setInfo(JSON.parse(storageInfo));
+          setSchedules(JSON.parse(storageSchedules));
+          setInfo(JSON.parse(storageInfo));
           setLoading(false);
         } else if (!storageSchedules && !storageInfo) {
           setLoading(false);

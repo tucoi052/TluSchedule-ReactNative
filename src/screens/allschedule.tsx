@@ -1,71 +1,53 @@
 import React, {useContext} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import ScheduleContext from '../../utils/contextprovider';
-import { getAllSchedule } from '../../utils/api';
-
-const AllSchedule = () => {
-  // useEffect(() => {
-  //   getc();
-  //   console.log('1');
-  // }, []);
-
-  // const getc = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem('schedules');
-  //     if (value !== null) {
-  //       const schedules = getAllSchedule(JSON.parse(value));
-  //       setData(schedules);
-  //     }
-  //   } catch (error) {}
-  // };
-  // let i = 0;
-  // const [data, setData] = useState<any[]>([[], []]);
-
+import {getAllSchedule} from '../../utils/api';
+import Header from '../components/header';
+import CardSchedule from '../components/card';
+const AllSchedule = ({navigation}: any) => {
   const context = useContext(ScheduleContext);
-  const data = getAllSchedule(JSON.parse(JSON.stringify(context.schedules)));
+  const data = getAllSchedule(context.schedules);
   return (
     <>
-      <Image source={require('./../../assets/home_top.png')} />
-      <ScrollView>
-        {data[0] ? (
-          data[0].map((day: string, indexDay: number) => (
-            <View key={indexDay}>
-              <View style={{marginLeft: '20%'}}>
-                <Text>{day}</Text>
+      <Header navigation={navigation} title={'Lịch học theo tuần'} />
+      {data ? (
+        <ScrollView style={{flex: 1}}>
+          {data[0].map((day: string, indexDay: number) => (
+            <View style={{width: '100%'}} key={indexDay}>
+              <View
+                style={{
+                  marginTop: 10,
+                  flexDirection: 'row',
+                  alignContent: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text style={{fontSize: 20, color: 'grey', fontWeight: 'bold'}}>
+                  {day}
+                </Text>
               </View>
 
-              {data[1][indexDay].map(
-                (item: {[x: string]: string}, indexSubject: number) => (
-                  <TouchableOpacity key={indexSubject} onPress={() => {}}>
-                    <View style={{marginLeft: '20%'}}>
-                      <Text>{item['Ten_mon']}</Text>
-                      <Text>{item['Phong_hoc']}</Text>
-                    </View>
-                  </TouchableOpacity>
-                ),
-              )}
+              <View style={{marginBottom: 20, flex: 1}}>
+                {data[1][indexDay].map(
+                  (item: {[x: string]: string}, indexSubject: number) => (
+                    <CardSchedule key={indexSubject} item={item} />
+                  ),
+                )}
+              </View>
             </View>
-          ))
-        ) : (
-          <View style={styles.container}>
-            <Text>Không</Text>
-          </View>
-        )}
-      </ScrollView>
+          ))}
+        </ScrollView>
+      ) : (
+        <View style={styles.container}>
+          <Text>Không</Text>
+        </View>
+      )}
     </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

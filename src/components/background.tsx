@@ -4,7 +4,7 @@ import {StyleSheet, ImageBackground} from 'react-native';
 const Background = () => {
   return (
     <ImageBackground
-      source={require('./../../assets/bg.png')}
+      source={require('../assets/bg.png')}
       style={styles.images}
     />
   );
