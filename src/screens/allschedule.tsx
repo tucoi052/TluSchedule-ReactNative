@@ -14,19 +14,10 @@ const AllSchedule = ({navigation}: any) => {
         <ScrollView style={{flex: 1}}>
           {data[0].map((day: string, indexDay: number) => (
             <View style={{width: '100%'}} key={indexDay}>
-              <View
-                style={{
-                  marginTop: 10,
-                  flexDirection: 'row',
-                  alignContent: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Text style={{fontSize: 20, color: 'grey', fontWeight: 'bold'}}>
-                  {day}
-                </Text>
+              <View style={styles.containerdate}>
+                <Text style={styles.textdate}>{day}</Text>
               </View>
-
-              <View style={{marginBottom: 20, flex: 1}}>
+              <View style={styles.containercard}>
                 {data[1][indexDay].map(
                   (item: {[x: string]: string}, indexSubject: number) => (
                     <CardSchedule key={indexSubject} item={item} />
@@ -50,6 +41,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  containerdate: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  containercard: {
+    marginBottom: 20,
+    flex: 1,
+  },
+  textdate: {
+    fontSize: 20,
+    color: 'grey',
+    fontWeight: 'bold',
   },
 });
 

@@ -11,8 +11,8 @@ const ToDaySchedule = ({navigation}: any) => {
     <>
       <Header navigation={navigation} title={'Lịch học hôm nay'} />
       {!!data ? (
-        <ScrollView style={{flex: 1, height: '100%'}}>
-          <View style={{marginTop: 15, marginBottom: 15}}>
+        <ScrollView style={styles.scrollview}>
+          <View style={styles.containercard}>
             {data.map((item: {[x: string]: string}, index: number) => (
               <CardSchedule key={index} item={item} />
             ))}
@@ -32,6 +32,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+  },
+  containercard: {
+    marginTop: 15,
+    marginBottom: 15,
+  },
+  scrollview: {
+    flex: 1,
+    height: '100%',
   },
 });
 
