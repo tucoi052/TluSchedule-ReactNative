@@ -5,10 +5,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Dim = Dimensions.get('screen');
 
-const CardSchedule = ({key, item}: any) => {
+const CardSchedule = ({item}: any) => {
   return (
     <Card
-      key={key}
       elevation={8}
       style={{
         marginHorizontal: Dim.width * 0.06,
@@ -27,10 +26,10 @@ const CardSchedule = ({key, item}: any) => {
         }}>
         <View
           style={{
-            width: 100,
+            width: 120,
             justifyContent: 'center',
             alignContent: 'center',
-            marginLeft: Dim.width * 0.05,
+            marginLeft: Dim.width * 0.04,
           }}>
           <Text style={{fontSize: 17, color: 'blue'}}>
             Tiết: {item['Tiet_hoc']}

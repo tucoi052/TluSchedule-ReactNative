@@ -1,23 +1,20 @@
 import React, {useContext} from 'react';
-import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import ScheduleContext from '../../utils/contextprovider';
-import { getInDay} from '../../utils/api';
+import {getInDay} from '../../utils/api';
 import Header from '../components/header';
 import CardSchedule from '../components/card';
 const ToDaySchedule = ({navigation}: any) => {
   const context = useContext(ScheduleContext);
-  const data = getInDay(
-    new Date('2020-06-11'),
-    context.schedules,
-  );
+  const data = getInDay(new Date('2020-06-11'), context.schedules);
   return (
     <>
       <Header navigation={navigation} title={'Lịch học hôm nay'} />
       {!!data ? (
         <ScrollView style={{flex: 1, height: '100%'}}>
-          <View style={{marginTop: 15}}>
-            {data.map((item, key) => (
-              <CardSchedule key={key} item={item} />
+          <View style={{marginTop: 15, marginBottom: 15}}>
+            {data.map((item: {[x: string]: string}, index: number) => (
+              <CardSchedule key={index} item={item} />
             ))}
           </View>
         </ScrollView>
