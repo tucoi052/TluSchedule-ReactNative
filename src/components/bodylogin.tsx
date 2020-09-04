@@ -6,18 +6,23 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useNavigation} from '@react-navigation/native';
 import ScheduleContext from '../../utils/contextprovider';
+import {WaveIndicator} from 'react-native-indicators';
 
 const Body = () => {
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
+  const [loading, setLoading] = useState(false);
   const context = useContext(ScheduleContext);
 
   return (
     <View style={styles.container}>
+      <Modal animationType="slide" transparent={true} visible={loading}>
+        <WaveIndicator size={170} color="#59D7FF" />
+      </Modal>
       <Text style={styles.textLogin}>Đăng nhập</Text>
       <View style={styles.inputUser}>
         <Icon name="user" size={20} color="#aaa" style={styles.icon} />
@@ -49,19 +54,18 @@ const Body = () => {
       <TouchableOpacity
         style={[shadow, styles.button]}
         onPress={async () => {
-          if (user !== '' && pass !== '')
-
+          if (user !== '' && pass !== '') {
+            setLoading(true);
             if (!(await context.login(user, pass)))
               Alert.alert('Lỗi', 'Kiểm tra lại tài khoản mật khẩu', [
-                {
-                  text: 'Cancel',
-                  onPress: () => {},
-                  style: 'cancel',
-                },
                 {text: 'OK', onPress: () => {}},
               ]);
-            else console.log('xong');
-          else console.log('Nhập');
+            else setLoading(false);
+          } else
+            Alert.alert('Lỗi', 'Không được để trống thông tin', [
+              {text: 'OK', onPress: () => {}},
+            ]);
+
         }}>
         <Text style={styles.textButton}>Đăng nhập</Text>
       </TouchableOpacity>

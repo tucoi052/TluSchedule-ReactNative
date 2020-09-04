@@ -73,8 +73,8 @@ const getAllSchedule = (temp: any) => {
   let schedules = [];
   let day: any = [];
 
-  if (!temp.length) return [];
-  const max = temp.reduce(
+  if (!temp?.length) return [];
+  const max = temp?.reduce(
     (pre: {[x: string]: string}, cur: {[x: string]: string}) => {
       return new Date(cur['Ngay_bat_dau'].split('/').reverse().join('-')) >
         new Date(pre['Ngay_bat_dau'].split('/').reverse().join('-'))

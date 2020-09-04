@@ -1,19 +1,19 @@
 import React from 'react';
-import Login from './screens/login';
-import Draw from './screens/drawer';
+import Login from '../screens/login';
+import Draw from '../draw/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useContext} from 'react';
-import ScheduleContext from '../utils/contextprovider';
-import {View, ActivityIndicator} from 'react-native';
+import ScheduleContext from '../../utils/contextprovider';
+import {View} from 'react-native';
+import { PacmanIndicator } from 'react-native-indicators';
 const Stack = createStackNavigator();
 
 const Route = () => {
   const context = useContext(ScheduleContext);
-  // console.log(context);
   if (context.loading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <PacmanIndicator color="#5B80FF" />
       </View>
     );
   }

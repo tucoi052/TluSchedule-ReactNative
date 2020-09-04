@@ -1,18 +1,16 @@
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import AllSchedule from './allschedule';
-import ToDaySchedule from './todayschedule';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import AllSchedule from '../screens/allschedule';
+import ToDaySchedule from '../screens/todayschedule';
 
 const Tab = createMaterialBottomTabNavigator();
-const Home = () => {
+const Stack = () => {
   return (
     <Tab.Navigator
       sceneAnimationEnabled={false}
       shifting={true}
       backBehavior={'none'}
-      initialRouteName="Home"
-      activeColor='blue'
+      activeColor='#5B80FF'
       inactiveColor='gray'
       barStyle={{
         borderStyle: 'solid',
@@ -25,19 +23,18 @@ const Home = () => {
         name="Hôm nay"
         component={ToDaySchedule}
         options={{
-          tabBarIcon: 'home',
+          tabBarIcon: 'calendar',
         }}
       />
       <Tab.Screen
         name="Tất cả"
         component={AllSchedule}
         options={{
-
-          tabBarIcon: 'book',
+          tabBarIcon: 'calendar-month',
         }}
       />
     </Tab.Navigator>
   );
 };
 
-export default Home;
+export default Stack;
