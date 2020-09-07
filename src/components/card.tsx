@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Dim = Dimensions.get('screen');
 
-const CardSchedule = ({item}: any) => {
+const CardSchedule = ({item,tap}: any) => {
   return (
     <Card
       elevation={8}
@@ -15,7 +15,8 @@ const CardSchedule = ({item}: any) => {
         height: Dim.height * 0.12,
       }}
       onPress={() => {
-        console.log(item);
+        console.log(item)
+        tap(item)
       }}>
       <View
         style={{

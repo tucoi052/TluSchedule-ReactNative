@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import ScheduleContext from '../../utils/contextprovider';
-import {getAllSchedule} from '../../utils/api';
 import Header from '../components/header';
 import CardSchedule from '../components/card';
+import { getAllSchedule } from '../../utils/service';
 const AllSchedule = ({navigation}: any) => {
   const context = useContext(ScheduleContext);
   const data = getAllSchedule(context.schedules);
